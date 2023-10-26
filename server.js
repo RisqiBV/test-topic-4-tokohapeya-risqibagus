@@ -13,7 +13,7 @@ app.post('/phoneMerks', async (req, res) => {
     res.json(phoneMerk);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Gagal menambahkan PhoneMerk.' });
+    res.status(500).json({ error: 'Gagal menambahkan Data Merk HP.' });
   }
 });
 
@@ -24,7 +24,7 @@ app.get('/phoneMerks', async (req, res) => {
     res.json(phoneMerks);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Gagal mengambil data PhoneMerk.' });
+    res.status(500).json({ error: 'Gagal mengambil Data Merk HP.' });
   }
 });
 
@@ -38,7 +38,7 @@ app.get('/phoneMerks/:id', async (req, res) => {
     res.json(phoneMerk);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Gagal mengambil data PhoneMerk.' });
+    res.status(500).json({ error: 'Gagal mengambil Data Merk HP.' });
   }
 });
 
@@ -53,7 +53,7 @@ app.put('/phoneMerks/:id', async (req, res) => {
     res.json(phoneMerk);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Gagal memperbarui PhoneMerk.' });
+    res.status(500).json({ error: 'Gagal memperbarui Data Merk HP.' });
   }
 });
 
