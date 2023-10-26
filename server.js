@@ -67,7 +67,7 @@ app.delete('/phoneMerks/:id', async (req, res) => {
     res.json({ message: 'PhoneMerk berhasil dihapus.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Gagal menghapus PhoneMerk.' });
+    res.status(500).json({ error: 'Gagal menghapus Data Merk HP.' });
   }
 });
 
