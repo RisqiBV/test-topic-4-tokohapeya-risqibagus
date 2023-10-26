@@ -11,7 +11,7 @@ model User {
   id           Int           @id @default(autoincrement())
   name         String        @unique
   address      String?
-  birth        DateTime?
+  birth        DateTime
   createAt     DateTime
   deletedAt    DateTime?
   updateAt     DateTime
