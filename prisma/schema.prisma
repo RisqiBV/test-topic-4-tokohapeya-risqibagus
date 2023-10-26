@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  address      String?
+  birth        DateTime?
+  createAt     DateTime
+  deletedAt    DateTime?
+  updateAt     DateTime
+  Profile      Profile?      @relation("UserProfile", fields: [name], references: [name])
+  transactions Transaction[] @relation("UserTransactions")
+}
+
+model Profile {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  username  String
+  createAt  DateTime
+  deletedAt DateTime?
+  updateAt  DateTime
+  users     User[]    @relation("UserProfile")
+}
+
+model PhoneMerk {
+  id         Int          @id @default(autoincrement())
+  phone_merk String       @unique
+  createAt   DateTime
+  deletedAt  DateTime?
+  updateAt   DateTime
+  phoneStock PhoneStock[]
+}
+
+model PhoneStock {
+  id           Int           @id @default(autoincrement())
+  phone_merk   String
+  phone_type   String        @unique
+  type_qty     Int
+  price        Int
+  createAt     DateTime
+  deletedAt    DateTime?
+  updateAt     DateTime
+  phoneMerk    PhoneMerk     @relation(fields: [phone_merk], references: [phone_merk])
+  transactions Transaction[] @relation("PhoneStockTransaction")
+}
+
+model Transaction {
+  id          Int        @id @default(autoincrement())
+  name        String
+  phone_type  String
+  qty         Int
+  amount      Int
+  disc_amount Int        @unique
+  is_paid     Boolean
+  createAt    DateTime
+  deletedAt   DateTime?
+  updateAt    DateTime
+  User        User       @relation("UserTransactions", fields: [name], references: [name])
+  phoneStock  PhoneStock @relation("PhoneStockTransaction", fields: [phone_type], references: [phone_type])
+  discount    Discount   @relation("TransactionDiscount", fields: [disc_amount], references: [disc_amount])
+}
+
+model Discount {
+  id           Int           @id @default(autoincrement())
+  disc_code    String        @unique
+  disc_amount  Int           @unique
+  createAt     DateTime
+  deletedAt    DateTime?
+  updateAt     DateTime
+  transactions Transaction[] @relation("TransactionDiscount")
+}
