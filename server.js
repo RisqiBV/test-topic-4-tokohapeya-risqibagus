@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-// Create PhoneMerk
+
 app.post('/phoneMerks', async (req, res) => {
   try {
     const phoneMerk = await prisma.phoneMerk.create({
@@ -17,7 +17,7 @@ app.post('/phoneMerks', async (req, res) => {
   }
 });
 
-// Read All PhoneMerks
+
 app.get('/phoneMerks', async (req, res) => {
   try {
     const phoneMerks = await prisma.phoneMerk.findMany();
@@ -28,7 +28,7 @@ app.get('/phoneMerks', async (req, res) => {
   }
 });
 
-// Read PhoneMerk by ID
+
 app.get('/phoneMerks/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -42,7 +42,7 @@ app.get('/phoneMerks/:id', async (req, res) => {
   }
 });
 
-// Update PhoneMerk by ID
+
 app.put('/phoneMerks/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -57,7 +57,7 @@ app.put('/phoneMerks/:id', async (req, res) => {
   }
 });
 
-// Delete PhoneMerk by ID
+
 app.delete('/phoneMerks/:id', async (req, res) => {
   const { id } = req.params;
   try {
