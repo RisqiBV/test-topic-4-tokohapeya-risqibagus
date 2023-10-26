@@ -4,73 +4,75 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
+// Create PhoneMerk
+app.post('/phoneMerks', async (req, res) => {
+  try {
+    const phoneMerk = await prisma.phoneMerk.create({
+      data: req.body,
+    });
+    res.json(phoneMerk);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Gagal menambahkan PhoneMerk.' });
+  }
+});
 
-app.post('/users', async (req, res) => {
-    const now = new Date(); 
-    const birthDate = new Date(req.body.birth); 
-  
-    try {
-      const user = await prisma.user.create({
-        data: {
-          name: req.body.name,
-          address: req.body.address,
-          birth: birthDate, 
-          createAt: now, 
-          deletedAt: now, 
-          updateAt: now
-        },
-      });
-      res.json(user);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Gagal menambahkan pengguna.' });
-    }
-  });
-  
+// Read All PhoneMerks
+app.get('/phoneMerks', async (req, res) => {
+  try {
+    const phoneMerks = await prisma.phoneMerk.findMany();
+    res.json(phoneMerks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Gagal mengambil data PhoneMerk.' });
+  }
+});
 
-  app.get('/users', async (req, res) => {
-    try {
-      const users = await prisma.user.findMany();
-      res.json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Gagal mengambil data pengguna.' });
-    }
-  });
+// Read PhoneMerk by ID
+app.get('/phoneMerks/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const phoneMerk = await prisma.phoneMerk.findUnique({
+      where: { id: parseInt(id) },
+    });
+    res.json(phoneMerk);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Gagal mengambil data PhoneMerk.' });
+  }
+});
 
-  app.put('/users/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-      const user = await prisma.user.update({
-        where: { id: parseInt(id) },
-        data: {
-          name: req.body.name, 
-        },
-      });
-      res.json(user);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Gagal memperbarui pengguna.' });
-    }
-  });
-  
+// Update PhoneMerk by ID
+app.put('/phoneMerks/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const phoneMerk = await prisma.phoneMerk.update({
+      where: { id: parseInt(id) },
+      data: req.body,
+    });
+    res.json(phoneMerk);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Gagal memperbarui PhoneMerk.' });
+  }
+});
 
-  app.delete('/users/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-      await prisma.user.delete({
-        where: { id: parseInt(id) },
-      });
-      res.json({ message: 'Pengguna berhasil dihapus.' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Gagal menghapus pengguna.' });
-    }
-  });
-  
-  const PORT = process.env.PORT || 8080;
+// Delete PhoneMerk by ID
+app.delete('/phoneMerks/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.phoneMerk.delete({
+      where: { id: parseInt(id) },
+    });
+    res.json({ message: 'PhoneMerk berhasil dihapus.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Gagal menghapus PhoneMerk.' });
+  }
+});
+
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`Server berjalan di port ${PORT}`);
 });
-
